@@ -64,6 +64,7 @@ public class Adoption {
     
 
     public void displayAdoptionDetails() {
+        System.out.println("hello this is nagy ");
         System.out.println("Adoption ID: " + id);
         System.out.println("PetID: "+petID);
         System.out.println("AdopterID: " +adopterID);
