@@ -1,6 +1,0 @@
-2,coww2,cow,grass,2,very good,5,AVAILABLE
-3,coww3,cow,grass,2,very good,5,AVAILABLE
-4,coww,cow,grass,2,very good,5,AVAILABLE
-5,coww,cow,grass,2,very good,5,AVAILABLE
-5,coww,cow,grass,2,very good,5,AVAILABLE
-5,coww,cow,grass,2,very good,5,AVAILABLE

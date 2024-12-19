@@ -1,0 +1,4 @@
+1,admin1,1,Admin,110|111
+3,admin2,1,Admin,112|113
+2,aa,1,Adopter,
+4,bb,1,Adopter,2
