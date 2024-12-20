@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.io.IOException;
 
 
-public class Screen {
+public abstract class Screen {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void PrintHeader(String Title){
@@ -85,7 +85,7 @@ public class Screen {
         }
         System.out.println("=== Adopter Menu ===");
         System.out.println("1. manage profile");
-        System.out.println("2. Pet Exploration");
+        System.out.println("2. Advanced Search");
         System.out.println("3. Adopt a pet");
         System.out.println("4. Notifications"+"("+Notifications.NumberOfNotreadNotifications((Adopter) Application.currentUser)+")");
         System.out.println("5. Adoption History");

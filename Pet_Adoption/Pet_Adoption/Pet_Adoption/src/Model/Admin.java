@@ -24,10 +24,7 @@ public class Admin extends User {
         this.managedShelters=managedShaleterss;
     }
 
-    public static void ManageUsers() {
 
-
-    }
 
     public List<Integer> getManagedShelters()
     {
@@ -38,9 +35,7 @@ public class Admin extends User {
         managedShelters.add(shelterId);
     }
 
-    public void removeShelter(int shelterId) {
-        managedShelters.remove(Integer.valueOf(shelterId));
-    }
+
     public static void AddNewShelter() {
         Shelter S1;
         String Name = "", Location = "", ContactInfo = "";

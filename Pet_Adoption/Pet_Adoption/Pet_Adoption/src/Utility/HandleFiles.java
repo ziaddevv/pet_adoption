@@ -10,11 +10,11 @@ import java.util.List;
 
 public class HandleFiles {
 
-    private static final String PET_FILE = "Pet_Adoption/Pet_Adoption/Pet_Adoption/pets.txt";
-    private static final String SHELTERS_FILE = "Pet_Adoption/Pet_Adoption/Pet_Adoption/shelters.txt";
-    private static final String USERS_FILE = "Pet_Adoption/Pet_Adoption/Pet_Adoption/users.txt";
-    private static final String ADOPTIONS_FILE = "Pet_Adoption/Pet_Adoption/Pet_Adoption/adoptions.txt";
-    private static final String NOTIFICATIONS_FILE = "Pet_Adoption/Pet_Adoption/Pet_Adoption/notifications.txt";
+    private static final String PET_FILE = "pets.txt";
+    private static final String SHELTERS_FILE = "shelters.txt";
+    private static final String USERS_FILE = "users.txt";
+    private static final String ADOPTIONS_FILE = "adoptions.txt";
+    private static final String NOTIFICATIONS_FILE = "notifications.txt";
 
     public static List<Pet> loadPets() {
         List<Pet> pets = new ArrayList<>();

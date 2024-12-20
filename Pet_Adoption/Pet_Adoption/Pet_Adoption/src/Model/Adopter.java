@@ -42,7 +42,7 @@ public class Adopter extends User {
 
     public void AdoptaPet() {
 
-        ShelterManagement.showSheltersInfo();
+        Shelter.showSheltersInfo();
 
         if (Application.shelters.isEmpty()) {
             Screen.pauseScreen();

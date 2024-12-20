@@ -11,21 +11,7 @@ public class ShelterManagement {
 
 
 
-    public static void ShowShelterInfo(Shelter S) {
 
-        System.out.print(S.getId() + " | " + S.getName() + " | " + S.getLocation()
-                + " | " + S.getContactInfo());
-    }
-
-    public static boolean IsShelterExistByID(int ShelterID) {
-
-        for (Shelter S : Application.shelters) {
-            if (S.getId() == ShelterID) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static Shelter IsShelterExistedByID(int ShelterID) {
         for (Shelter s : Application.shelters) {
@@ -291,27 +277,7 @@ public class ShelterManagement {
         Screen.pauseScreen();
     }
 
-    public static void showSheltersInfo() {
 
-        if (Application.shelters.isEmpty()) {
-            System.out.println("No shelters available to display.");
-            return;
-        }
-
-        // Header
-        System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "Name", "Location", "Contact Info");
-
-        // Display each shelter
-        for (Shelter shelter : Application.shelters) {
-            System.out.printf(
-                    "%-10d%-20s%-20s%-20s\n",
-                    shelter.getId(),
-                    shelter.getName(),
-                    shelter.getLocation(),
-                    shelter.getContactInfo()
-            );
-        }
-    }
 
     private static List<Integer> GetManagedSheltersIDs(){
         List<Integer> ManagedShelters = new ArrayList<>();

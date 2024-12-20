@@ -38,20 +38,50 @@ public class Application {
 
     private void LoadFilesData() throws IOException {
         System.out.println("one");
+         try{
+             adoptions = HandleFiles.loadAdoptions();
 
-        adoptions = HandleFiles.loadAdoptions();
-        System.out.println("two");
+         }
+         catch (Exception e)
+         {
+             System.out.println("LOADAdoptions Failed");
+         }
 
-        HandleFiles.loadUsers(admins, adopters);
-        System.out.println("three");
+        try{
+            HandleFiles.loadUsers(admins, adopters);
 
-        shelters = HandleFiles.loadShelters();
-        System.out.println("four");
+        }
+        catch (Exception e)
+        {
+            System.out.println("load users Failed");
+        }
+        try{
+            shelters = HandleFiles.loadShelters();
 
-        pets = HandleFiles.loadPets();
+        }
+        catch (Exception e)
+        {
+            System.out.println("load Shelters Failed");
+        }
 
-        System.out.printf("Five");
-        notificaions = HandleFiles.loadNotifications();
+        try{
+            pets = HandleFiles.loadPets();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("load Pets Failed");
+        }
+
+        try{
+            notificaions = HandleFiles.loadNotifications();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("load Nofifications Failed");
+        }
+
     }
 
     private void SaveFilesData() throws IOException {

@@ -1,5 +1,6 @@
 package Model;
 
+import Main.Application;
 import Management.ShelterManagement;
 import UI.Screen;
 
@@ -64,5 +65,26 @@ public class Shelter {
         System.out.printf(
                 "%-5s%-10s%-10s%-10s\n",
         id , name , location , contactInfo );
+    }
+    public static void showSheltersInfo() {
+
+        if (Application.shelters.isEmpty()) {
+            System.out.println("No shelters available to display.");
+            return;
+        }
+
+        // Header
+        System.out.printf("%-10s%-20s%-20s%-20s\n", "ID", "Name", "Location", "Contact Info");
+
+        // Display each shelter
+        for (Shelter shelter : Application.shelters) {
+            System.out.printf(
+                    "%-10d%-20s%-20s%-20s\n",
+                    shelter.getId(),
+                    shelter.getName(),
+                    shelter.getLocation(),
+                    shelter.getContactInfo()
+            );
+        }
     }
 }
