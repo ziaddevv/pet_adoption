@@ -97,7 +97,7 @@ public class Adoption {
     {
         for (Adoption a : Application.adoptions)
         {
-            if (a.getPetID() == IDpet&&a.getAdopterID()!=IDAdopter&&a.getStatus().equals(AdoptionStatus.REJECTED))
+            if (a.getPetID() == IDpet&&a.getAdopterID()!=IDAdopter&&a.getStatus().equals(AdoptionStatus.PENDING))
             {
                 a.setStatus(AdoptionStatus.REJECTED);
                 Application.notificaions.add(new Notifications(a.getAdopterID(),Application.currentUser.getId(),
@@ -239,7 +239,10 @@ public class Adoption {
         boolean found = false;
         while (!found){
 
-            Choice = Screen.getIntInput("Enter AdoptionID to handle: ");
+            Choice = Screen.getIntInput("Enter AdoptionID to handle or [-1] to go back :");
+            if(Choice == -1){
+                return;
+            }
 
             for (Adoption a : FilteredRequests)
             {

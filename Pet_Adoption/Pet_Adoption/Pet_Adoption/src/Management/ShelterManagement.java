@@ -9,20 +9,7 @@ import java.util.List;
 
 public class ShelterManagement {
 
-    public static void AddNewShelter() {
-        Shelter S1;
-        String Name = "", Location = "", ContactInfo = "";
-        List<Integer> PetsIDS = new ArrayList<>();
-        Name = Screen.getInput("\nEnter The Name Of The Shelter :");
-        Location = Screen.getInput("Enter The Location Of The Shelter :");
-        ContactInfo = Screen.getInput("Enter Contact Info :");
-        S1 = new Shelter(Name, Location, ContactInfo, PetsIDS);
-        Application.shelters.add(S1);
-        Admin A = (Admin)Application.currentUser;
-        A.addShelter(S1.getId());                   //To Add The ShelterID To The Admin;
-        System.out.println("Shelter Was Added Successfully :)");
-        Screen.pauseScreen();
-    }
+
 
     public static void ShowShelterInfo(Shelter S) {
 
@@ -50,156 +37,10 @@ public class ShelterManagement {
         return null;
     }
 
-    public static void DeleteShelter() {
-        FilterSheltersByAdmin();
-        int ShelterID = Screen.getIntInput("Change The Shelter :");
-        while(!IsAdminHasAccessToShelter(ShelterID)){
-            ShelterID = Screen.getIntInput("Invalid ID :( Try Again :");
-        }
-
-        String choice;
-        boolean flag = true , HasReference = true;
-
-        while(flag) {
-            for (Shelter S : Application.shelters) {
-                if (ShelterID == S.getId()) {
-                    if(!IsShelterFree(S)){
-                        break;
-                    }
-                    flag = false;
-                    choice = Screen.getInput("Are You Sure You Want To Delete It [y/n] :");
-                    if (choice.equals("y") || choice.equals("Y")) {
-                        Application.shelters.remove(S);
-                        System.out.println("Deleted Successfully (:");
-                        Screen.pauseScreen();
-                    }
-                    break;
-                }
-            }
-            if(HasReference){
-                System.out.println("Cannot Remove This Shelter As it Has References :(");
-            }
-            if(flag)
-            {
-                ShelterID = Screen.getIntInput("Invalid ID Enter [-1] To go Back Or Enter A new One :");
-                if(ShelterID == -1)
-                    return;
-            }
-        }
-
-    }
-
-    public static void UpdateShelter(){
-        FilterSheltersByAdmin();
-        int ShelterID = Screen.getIntInput("Enter The Shelter ID Or -1 To Go Back :");
-        if(ShelterID == -1)
-            return;
-        while(!IsAdminHasAccessToShelter(ShelterID)){
-            System.out.println("You Do Not Have Access On This Shelter Try Another One");
-            ShelterID = Screen.getIntInput("Enter ShelterID Or [-1] To Go Back :");
-            if(ShelterID == -1)
-                return;
-        }
-
-        Shelter S = IsShelterExistedByID(ShelterID);
-        while(S == null){
-            ShelterID = Screen.getIntInput("Invalid ID Enter [-1] to Go Back Or Enter The ID :");
-            if(ShelterID == -1)
-                return;
-            S = IsShelterExistedByID(ShelterID);
-        }
-        S.UpdateShelterInfo();
-        System.out.println("Updated Successfully :)");
-        Screen.pauseScreen();
-    }
-
-    private static boolean IsShelterFree(Shelter S) {return (S.PetsIDs.isEmpty());}
-
-    public static void AddNewPet(List<Pet> pets, List<Shelter> shelters) {
-        Pet P1;
-        String Name, Breed, Species, HealthStatus;
-        enavailability Availability = enavailability.AVAILABLE;
-        int Age = -1, ShelterID = -1;
 
 
-        Name = Screen.getInput("Enter The Name Of The Animal :");
-        Species = Screen.getInput("\nEnter The Species Of The Animal :");
-        Breed = Screen.getInput("\nEnter The Breed Of The Animal :");
-        HealthStatus = Screen.getInput("\nEnter The Health Status Of The Animal :");
-        Age = Screen.getIntInput("\nEnter The age Of The Animal :");
-        FilterSheltersByAdmin();
-        ShelterID = Screen.getIntInput("\nEnter The ShelterID Or [-1] To Go Back :");
-        if(ShelterID == -1)
-            return;
-        while(!IsAdminHasAccessToShelter(ShelterID)) {
-            System.out.println("You Do Not Have Access On This Shelter Try Another One");
-            ShelterID = Screen.getIntInput("Enter ShelterID Or [-1] To Go Back :");
-            if(ShelterID == -1)
-                return;
-        }
-        P1 = new Pet(Name, Species, Breed, Age, HealthStatus, ShelterID, Availability);
-        pets.add(P1);
+    public static boolean IsShelterFree(Shelter S) {return (S.PetsIDs.isEmpty());}
 
-        for (Shelter S : shelters) {
-            if (P1.getShelterId() == S.getId()) {
-                S.PetsIDs.add(P1.getId());
-            }
-        }
-        System.out.println(P1.getName() + " Has Been Added Successfully :)");
-        Screen.pauseScreen();
-    }
-
-    public static void DeletePet() {
-        FilterSheltersByAdmin();
-        int ShelterID = Screen.getIntInput("Enter The Shelter ID For The Pet :");
-        while(!IsAdminHasAccessToShelter(ShelterID)){
-            ShelterID = Screen.getIntInput("Invalid ID :( Try Again :");
-        }
-        // The following code is for displaying Pets on The Shelter;
-        List<Pet> FilteredPets = new ArrayList<>();
-        for (Pet p : Application.pets) {
-            if (p.getShelterId() == ShelterID&&p.IsPetAvailable()) {
-                FilteredPets.add(p);
-            }
-        }
-        ShowPetsList(FilteredPets, "Filtered Pets By ShelterID : " + ShelterID);
-        Screen.pauseScreen();
-        if(FilteredPets.isEmpty()){
-            System.out.println("The Shelter Is Empty !");
-            Screen.pauseScreen();
-            return;
-        }
-        int PetID = Screen.getIntInput("Enter The Pet ID :");
-        String choice;
-        boolean flag = true;
-
-        while(flag) {
-            for (Pet p : FilteredPets) {
-                if (PetID == p.getId()) {
-                    flag = false;
-                    choice = Screen.getInput("Are You Sure You Want To Delete It [y/n] :");
-                    if (choice.equals("y") || choice.equals("Y")) {
-                        DeletePetIDFromShelter(Application.shelters, p.getShelterId(), p.getId());
-                        Adoption.DeleteAdoption(p.getId());
-                        FilteredPets.remove(p);
-                        Application.pets.remove(p);
-                        System.out.println("Deleted Successfully (:");
-                        Screen.pauseScreen();
-                    }
-                    break;
-                }
-            }
-            boolean flagE = FilteredPets.isEmpty();
-            if(flagE){
-                flag = false;
-            }
-            if(flag == true )
-            {
-                PetID = Screen.getIntInput("Invalid ID :( Try Again :");
-            }
-        }
-
-    }
 
     public static void DeletePetIDFromShelter(List<Shelter> shelters, int ShelterID, int PetID) {
         for (Shelter S : shelters) {
@@ -215,43 +56,7 @@ public class ShelterManagement {
         }
     }
 
-    public static void UpdatePet(List<Pet> pets, List<Shelter> shelters) {
-        FilterSheltersByAdmin();
-        int ShelterID = Screen.getIntInput("Enter The Shelter ID Or -1 To Go Back :");
-        if(ShelterID == -1)
-            return;
-        while(!IsAdminHasAccessToShelter(ShelterID)){
-            System.out.println("You Do Not Have Access On This Shelter Try Another One");
-            ShelterID = Screen.getIntInput("Enter ShelterID Or [-1] To Go Back :");
-            if(ShelterID == -1)
-                return;
-        }
 
-        // The following code is for displaying Pets on The Shelter;
-        List<Pet> FilteredPets = new ArrayList<>();
-        for (Pet p : Application.pets) {
-            if (p.getShelterId() == ShelterID) {
-                FilteredPets.add(p);
-            }
-        }
-        ShowPetsList(FilteredPets, "Filtered Pets By ShelterID : " + ShelterID);
-
-        int PetID = Screen.getIntInput("Enter The Pet ID Or [-1] To Go Back :");
-        if(PetID == -1)
-            return;
-
-        Pet pet = IsPetExistByIDAndShelterID(PetID,ShelterID);
-
-        while (pet == null) {
-            System.out.println("Invalid ID ): Try Again :");
-            PetID = Screen.getIntInput("Enter The Pet ID Or [-1] To Go Back :");
-            if(PetID == -1)
-                return;
-            pet = IsPetExistByIDAndShelterID(PetID,ShelterID);
-        }
-
-        pet.UpdatePetInfo(shelters);
-    }
 
     public static void ShowPetInfo(Pet p) {
         System.out.printf(
@@ -507,7 +312,6 @@ public class ShelterManagement {
             );
         }
     }
-
 
     private static List<Integer> GetManagedSheltersIDs(){
         List<Integer> ManagedShelters = new ArrayList<>();

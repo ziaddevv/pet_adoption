@@ -385,13 +385,13 @@ public class Application {
             Choice = Screen.getIntInput("");
             switch (Choice) {
                 case 1:
-                    ShelterManagement.AddNewPet(pets,shelters);
+                    Admin.AddNewPet(pets,shelters);
                     break;
                 case 2:
-                    ShelterManagement.DeletePet();
+                    Admin.DeletePet();
                     break;
                 case 3:
-                    ShelterManagement.UpdatePet(pets,shelters);
+                    Admin.UpdatePet(pets,shelters);
                     break;
                 case 4:
                     return;
@@ -469,13 +469,13 @@ public class Application {
             Choice = Screen.getIntInput("Enter Your Choice :");
             switch (Choice) {
                 case 1:
-                    ShelterManagement.AddNewShelter();
+                    Admin.AddNewShelter();
                     break;
                 case 2:
-                    ShelterManagement.DeleteShelter();
+                    Admin.DeleteShelter();
                     break;
                 case 3:
-                    ShelterManagement.UpdateShelter();
+                    Admin.UpdateShelter();
                     break;
                 case 4:
                     return;
