@@ -1,16 +1,13 @@
-import com.sun.net.httpserver.Request;
+package Model;
 
-import java.applet.AppletContext;
+import UI.*;
+import Utility.*;
+import Management.*;
+import Main.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
-import java.util.Scanner;
 
-
-enum AdoptionStatus {
-    PENDING, APPROVED, REJECTED;
-}
 
 public class Adoption {
     private int id;
@@ -96,6 +93,18 @@ public class Adoption {
         }
         return false;
     }
+    private static void ChangeStatusForRequests(int IDpet,int IDAdopter)
+    {
+        for (Adoption a : Application.adoptions)
+        {
+            if (a.getPetID() == IDpet&&a.getAdopterID()!=IDAdopter&&a.getStatus().equals(AdoptionStatus.REJECTED))
+            {
+                a.setStatus(AdoptionStatus.REJECTED);
+                Application.notificaions.add(new Notifications(a.getAdopterID(),Application.currentUser.getId(),
+                        IDpet,"Rejected",false, LocalDate.now()));
+            }
+        }
+    }
 
     private static void ShowOneRequest(Adoption req) {
         Adopter adopter = AdopterManagement.IsAdopterExistedByID(Application.adopters, req.getAdopterID());
@@ -138,7 +147,7 @@ public class Adoption {
 
     }
 
-    private static List<Adoption> FilterRequestsByUser(List<Adoption> Requests, User user) {
+    public static List<Adoption> FilterRequestsByUser(List<Adoption> Requests, User user) {
         List<Adoption> FilteredRequests = new ArrayList<>();
 
         if (user instanceof Admin)
@@ -187,11 +196,15 @@ public class Adoption {
             switch (Choice) {
                 case 1:
                     if (UpdateAdoptionStatusInList(Application.adoptions, Request.getId(), AdoptionStatus.APPROVED) &&
-                            ShelterManagement.UpdatePetAvailabilityInList(Application.pets, Request.getPetID(), enAvailability.ADOPTED) &&
+                            ShelterManagement.UpdatePetAvailabilityInList(Application.pets, Request.getPetID(), enavailability.ADOPTED) &&
                             AdopterManagement.AddAdoptionToAdopterInList(Application.adopters, Request.getAdopterID(), Request.getId()))
                         System.out.println("Updated Successfully :)");
+                         ChangeStatusForRequests(Request.getPetID(),Request.getAdopterID());
+
                     Application.notificaions.add(new Notifications(Request.adopterID,Application.currentUser.getId(),
                             Request.petID,"Approved",false, LocalDate.now()));
+                       // apply reject for all the rest of pending requests on that pet
+
                     Screen.pauseScreen();
                     return;
                 case 2:
@@ -211,6 +224,7 @@ public class Adoption {
         }
 
     }
+
 
     public static void ShowAdminPendingRequests(List<Adoption> AllAdoptions, User user) {
         List<Adoption> FilteredRequests = (FilterRequestsByUserAndStatus(AllAdoptions, user, true));

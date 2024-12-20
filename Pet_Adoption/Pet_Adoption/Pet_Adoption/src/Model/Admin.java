@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,11 @@ public class Admin extends User {
     public Admin( String username, String password,List<Integer> managedShaleterss) {
         super( username, password);
         this.managedShelters=managedShaleterss;
+    }
+
+    public static void ManageUsers() {
+
+
     }
 
     public List<Integer> getManagedShelters()

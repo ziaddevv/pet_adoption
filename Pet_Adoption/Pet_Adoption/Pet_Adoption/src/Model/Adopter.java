@@ -1,3 +1,9 @@
+package Model;
+
+import Main.*;
+import Management.*;
+import Utility.*;
+import UI.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,48 +38,6 @@ public class Adopter extends User {
         adoptionHistory.add(adoptionID);
     }
 
-    public void ManageProfile() {   System.out.println("====== Manage Profile =====");
-        System.out.println("1. Change UserName");
-        System.out.println("2. Change Password");
-        System.out.println("3. Back");
-
-        int choice = Screen.getIntInput("Choice");
-        switch (choice) {
-            case 1:
-            {
-                String username=Screen.getInput("New UserName is : ");
-
-                while (Application.isUsernameTaken(username))
-                {
-                    System.out.println("This UserName is already taken :(");
-                    username=Screen.getInput("New UserName is : ");
-                }
-
-                this.setUsername(username);
-                Screen.displayMessage("Your UserName is : "+username);
-            }
-            break;
-            case 2:{
-
-                if(this.getPassword().equals(Screen.getInput("Please Enter the Current Password")))
-                {
-                    String NewPassword=Screen.getInput("Enter the New Password");
-                    // confirm password (if you need ) ---> read it again to confirm
-                    this.setPassword(NewPassword);
-                }
-                else{
-                    Screen.getInput("Wrong Password");
-
-                }
-            }
-            break;
-            case 3 :
-                System.out.println("LOG OUT");
-                return;
-
-            default : Screen.displayMessage("Invalid choice.");
-        }
-    }
 
 
     public void AdoptaPet() {
@@ -167,6 +131,36 @@ public class Adopter extends User {
         }
         Screen.pauseScreen();
     }
+    public void AdoptoionHistorty() {
+        List<Adoption> adoptions = Adoption.FilterRequestsByUser(Application.adoptions, this);
+        if(adoptions.size()==0)
+        {
+            System.out.println("NO Adoptions Yet");
+            Screen.pauseScreen();
+        }
+        else
+        {
+            for (Adoption HistoryInfo : adoptions) {
+                System.out.println("======================================= Adoption History Information ============================================");
 
+                System.out.println(" ID of process is          ---->>>>> " + HistoryInfo.getId());
+                System.out.println(" pet Name is                     ---->>>>> " + ShelterManagement.IsPetExistByID(HistoryInfo.getPetID()).getName() );
+                System.out.println(" pet Species is                     ---->>>>> " + ShelterManagement.IsPetExistByID(HistoryInfo.getPetID()).getSpecies() );
+                System.out.println(" Date of Adoption is    ---->>>>> " + HistoryInfo.getAdoptionDate());
+                if (HistoryInfo.getStatus().equals(AdoptionStatus.APPROVED)) {
+                    System.out.println("The adoption process is Approved :-) ");
+                } else if (HistoryInfo.getStatus().equals(AdoptionStatus.PENDING)) {
+                    System.out.println("The adoption process is Pending :-( ");
+                } else if (HistoryInfo.getStatus().equals(AdoptionStatus.REJECTED)) {
+                    System.out.println(" sorry for that , The adoption process is Pending :-( ");
+                }
+                System.out.println("==============================================================================================================");
+                Screen.pauseScreen();
+
+            }
+        }
+
+
+    }
 
 }

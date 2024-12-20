@@ -1,6 +1,7 @@
+package Management;
 import java.util.List;
 import java.util.Scanner;
-
+import Model.Adopter;
 public class AdopterManagement {
 
     public  static void AddNewAdopter(List<Adopter> Adopters){

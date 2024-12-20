@@ -1,3 +1,9 @@
+package Management;
+
+import Main.*;
+import Model.*;
+import UI.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +52,7 @@ public class ShelterManagement {
 
     public static void DeleteShelter() {
         FilterSheltersByAdmin();
-        int ShelterID = Screen.getIntInput("Enter The Shelter ID :");
+        int ShelterID = Screen.getIntInput("Change The Shelter :");
         while(!IsAdminHasAccessToShelter(ShelterID)){
             ShelterID = Screen.getIntInput("Invalid ID :( Try Again :");
         }
@@ -112,7 +118,7 @@ public class ShelterManagement {
     public static void AddNewPet(List<Pet> pets, List<Shelter> shelters) {
         Pet P1;
         String Name, Breed, Species, HealthStatus;
-        enAvailability Availability = enAvailability.AVAILABLE;
+        enavailability Availability = enavailability.AVAILABLE;
         int Age = -1, ShelterID = -1;
 
 
@@ -248,17 +254,17 @@ public class ShelterManagement {
     }
 
     public static void ShowPetInfo(Pet p) {
-            System.out.printf(
-                    "%-5d%-10s%-10s%-10s%-5d%-15s%-10s%-10s\n",
-                    p.getId(),
-                    p.getName(),
-                    p.getBreed(),
-                    p.getSpecies(),
-                    p.getAge(),
-                    p.getHealthStatus(),
-                    p.getShelterId(),
-                    p.getAvailability()
-            );
+        System.out.printf(
+                "%-5d%-10s%-10s%-10s%-5d%-15s%-10s%-10s\n",
+                p.getId(),
+                p.getName(),
+                p.getBreed(),
+                p.getSpecies(),
+                p.getAge(),
+                p.getHealthStatus(),
+                p.getShelterId(),
+                p.getAvailability()
+        );
 
     }
 
@@ -284,7 +290,7 @@ public class ShelterManagement {
         return null;
     }
 
-    public static boolean UpdatePetAvailabilityInList(List<Pet> PetsList, int TargetedID, enAvailability newAvailability) {
+    public static boolean UpdatePetAvailabilityInList(List<Pet> PetsList, int TargetedID, enavailability newAvailability) {
         for (Pet p : PetsList) {
             if (p.getId() == TargetedID) {
                 p.setAvailability(newAvailability);
@@ -465,10 +471,10 @@ public class ShelterManagement {
         else
             pets = Application.pets;
 
-        enAvailability TargetedAvailability;
+        enavailability TargetedAvailability;
         int Result = Screen.getIntInput("Enter Availability Mode [1]Available , [0]Unavailable");
         List<Pet> FilteredPets = new ArrayList<>();
-        TargetedAvailability = (Result == 1) ? enAvailability.AVAILABLE : enAvailability.ADOPTED;
+        TargetedAvailability = (Result == 1) ? enavailability.AVAILABLE : enavailability.ADOPTED;
 
         for (Pet p : pets) {
             if (p.getAvailability() == TargetedAvailability) {
@@ -502,16 +508,6 @@ public class ShelterManagement {
         }
     }
 
-    private static List<Shelter> GetManagedShelters(){
-        List<Integer> ManagedSheltersIDs = GetManagedSheltersIDs();
-        List<Shelter> ManagedShelters = new ArrayList<>();
-        Shelter S;
-        for(int I : ManagedSheltersIDs){
-            S = IsShelterExistedByID(I);
-            ManagedShelters.add(S);
-        }
-        return ManagedShelters;
-    }
 
     private static List<Integer> GetManagedSheltersIDs(){
         List<Integer> ManagedShelters = new ArrayList<>();
@@ -558,11 +554,18 @@ public class ShelterManagement {
         for(int ID : managedShelters){
             S = IsShelterExistedByID(ID);
             if(S != null)
-            S.displayShelterDetails();
+                S.displayShelterDetails();
         }
     }
 
 }
+
+
+
+
+
+
+
 
 
 

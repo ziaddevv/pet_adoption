@@ -1,4 +1,10 @@
-import java.sql.SQLOutput;
+package UI;
+
+import Main.Application;
+import Model.Adopter;
+import Model.Pet;
+import Utility.Notifications;
+
 import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
@@ -36,7 +42,7 @@ public class Screen {
     }
 
     public static void showMainMenu() {
-        System.out.println("=== Main Menu ===");
+        System.out.println("=== Main.Main Menu ===");
         System.out.println("1. Log In");
         System.out.println("2. Register");
         System.out.println("3. Exit");
@@ -46,11 +52,12 @@ public class Screen {
     public static void showAdminMenu() {
         System.out.println("=== Admin Menu ===");
         System.out.println("1. Manage User Profiles on System");
-        System.out.println("2. Shelter Management");
-        System.out.println("3. Adoption Process Management");
-        System.out.println("4. Pet Exploration");
-        System.out.println("5. Reporting and Analytics");
-        System.out.println("6. Log Out");
+        System.out.println("2. Pet Management");
+        System.out.println("3. Shelter Management");
+        System.out.println("4. Adoption Process Management");
+        System.out.println("5. Pet Exploration");
+        System.out.println("6. Reporting and Analytics");
+        System.out.println("7. Log Out");
         System.out.print("Enter your choice: ");
     }
 
@@ -87,16 +94,18 @@ public class Screen {
     }
 
     public static String getInput(String message) {
+        Scanner scanner = new Scanner(System.in);
         System.out.print(message);
         String input;
         do {
-            input = scanner.next().trim();
+            input = scanner.nextLine().trim();  // Use nextLine() to capture the entire line
             if (input.isEmpty()) {
                 System.out.print("Input cannot be empty. " + message + " ");
             }
         } while (input.isEmpty());
-        return input.trim();
+        return input;
     }
+
 
     public static void ShowPetExplorationScreenForAdopters(){
         System.out.println("\n\n\t\tPet Exploration");
@@ -128,8 +137,19 @@ public class Screen {
     }
 
     public static int getIntInput(String message) {
-        System.out.print(message);
-        return scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int number;
+        while (true) {
+            System.out.print(message);
+            if (scanner.hasNextInt()) {  // Check if the input is an integer
+                number = scanner.nextInt();
+                scanner.nextLine();  // Clear the buffer
+                return number;
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.nextLine();  // Clear the invalid input
+            }
+        }
     }
 
     public static void displayMessage(String message) {
@@ -141,13 +161,15 @@ public class Screen {
             pet.displayPetDetails();
         }
     }
-public static void ShowAnalyticsScreen(){
-    System.out.println("===Analytics Screen===");
-    System.out.println("[1] Shelters Performance");
-    System.out.println("[2] Pets Analytics");
-    System.out.println("[3] Back");
-
-}
+    public static void ShowAnalyticsScreen(){
+        System.out.println("=== Analytics Screen ===");
+        System.out.println("[1] Shelters Performance");
+        System.out.println("[2] Pets Analytics");
+        System.out.println("[3] Adopter Statistics");
+        System.out.println("[4] Adoption Trends");
+        System.out.println("[5] Adoption Requests Statistics");
+        System.out.println("[6] Back");
+    }
 
 public static void ShowSheltersScreen(){
     System.out.println("===Shelters Screen===");

@@ -1,8 +1,9 @@
-2,cow2,Cow,breed2,2,very good,110,ADOPTED
+2,Cow,Cow,breed2,2,good,114,ADOPTED
 3,dog1,Dog,breed4,2,very good,110,AVAILABLE
 4,cat1,Cat,breed3,2,very good,111,AVAILABLE
-5,cat2,Cat,breed3,2,very good,112,AVAILABLE
+5,cat2,Cat,breed3,2,very good,112,ADOPTED
 6,cow3,Cow,breed2,2,very good,111,AVAILABLE
 8,parrot1,Parrot,breed5,2,very good,113,AVAILABLE
 9,parrot2,Parrot,breed5,2,very good,112,AVAILABLE
 11,KoKe,Cat,female,1,Dead,112,AVAILABLE
+12,hello,cat,egy,1,good,114,AVAILABLE

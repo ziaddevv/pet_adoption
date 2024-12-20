@@ -1,6 +1,11 @@
+package Utility;
+
+import Main.Application;
+import Management.ShelterManagement;
+import Model.Adopter;
+import Model.Pet;
+
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 public class Notifications {
     private int NotificationID;
@@ -50,7 +55,7 @@ public class Notifications {
     }
 
     public void ShowNotificationToAdopter(){
-        Pet pet=ShelterManagement.IsPetExistByID(this.PetID);
+        Pet pet= ShelterManagement.IsPetExistByID(this.PetID);
         if(Status.equals("Approved")) {
             System.out.println("Your Request To Adopt The " + pet.getName() + " Has Been Approved By" +
                     "The Admin With ID = " + this.AdminID);

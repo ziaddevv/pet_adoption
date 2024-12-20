@@ -1,4 +1,8 @@
-import java.util.ArrayList;
+package Model;
+
+import Management.ShelterManagement;
+import UI.Screen;
+
 import java.util.List;
 
 public class Shelter {
@@ -6,7 +10,7 @@ public class Shelter {
     private String name;
     private String location;
     private String contactInfo;
-    public List<Integer> PetsIDs; // List of Pet IDs for pets
+    public List<Integer> PetsIDs; // List of Model.Pet IDs for pets
     
     public String getContactInfo() {
         return contactInfo;

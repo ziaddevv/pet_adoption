@@ -1,6 +1,13 @@
+package Main;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import  Model.*;
+import  Utility.*;
+import  UI.*;
+import  Management.*;
+import Analytics.*;
+
 
 public class Application {
     private static List<Admin> admins;
@@ -142,23 +149,15 @@ public class Application {
 
 //للاحتياااااط
 //        if (loginAdmin) {
-//            Screen.displayMessage("Logged in as Admin.");
+//            UI.Screen.displayMessage("Logged in as Model.Admin.");
 //            adminMenu();
 //            System.out.println("logged out");
 //        } else if (loginAdopter) {
-//            Screen.displayMessage("Logged in as Adopter.");
+//            UI.Screen.displayMessage("Logged in as Model.Adopter.");
 //            adopterMenu();
 
     private void register() {
         System.out.println("=== Register Screen ===");
-
-        String role = Screen.getInput("Role (Admin/Adopter): ");
-
-        while (!role.equalsIgnoreCase("Admin") && !role.equalsIgnoreCase("Adopter")) {
-            Screen.displayMessage("Invalid role. Please try again  :).");
-            role = Screen.getInput("Role (Admin/Adopter): ");
-
-        }
 
         String username = Screen.getInput("Enter username: ");
         while (isUsernameTaken(username)) {
@@ -172,13 +171,9 @@ public class Application {
             password = Screen.getInput("Enter password: ");
         }
 
-        if (role.equalsIgnoreCase("Admin")) {
-            admins.add(new Admin(username, password, new ArrayList<>()));
-            Screen.displayMessage("Admin registered successfully.");
-        } else if (role.equalsIgnoreCase("Adopter")) {
             adopters.add(new Adopter(username, password, new ArrayList<>()));
             Screen.displayMessage("Adopter registered successfully.");
-        }
+
 
         Screen.pauseScreen();
 
@@ -214,25 +209,30 @@ public class Application {
 
             switch (choice) {
                 case 1:
-                    //manage User Profiles
+                    currentuser.ManageProfile();
+                    //manage Model.User Profiles
                     break;
                 case 2:
-                    //Pet Management
+                    //MPet Management
                     ShelterManagementMenu();
 
                     break;
                 case 3:
-                    // Adopter Management
-                    RequestManagementMenu();
+                    // shelter Management
+                    ShelterMenu();
                     break;
                 case 4:
-                    PetExplorationMenuForAdmins();
+                    // Model.Adopter Management
+                    RequestManagementMenu();
                     break;
                 case 5:
+                    PetExplorationMenuForAdmins();
+                    break;
+                case 6:
                     //reports and analytics
                     AnalyticsMenu();
                     break;
-                case 6:
+                case 7:
                     System.out.println("log out");
                     return;
                 case 0:
@@ -256,7 +256,7 @@ public class Application {
                 case 1: // manage profile
                     currentuser.ManageProfile();
                     break;
-                case 2:// Pet Exploration
+                case 2:// Model.Pet Exploration
                     PetExplorationMenuForAdopters();
                     break;
                 case 3 :
@@ -267,7 +267,8 @@ public class Application {
 
                     break;
                 case 5:
-                    //Adoption History
+                    //Model.Adoption History
+                    currentuser.AdoptoionHistorty();
 
                     break;
                 case 6:
@@ -280,7 +281,7 @@ public class Application {
     }
 
     private void DeleteShelter() {
-        int id=Screen.getIntInput("enter the ID of the shelter");
+        int id= Screen.getIntInput("enter the ID of the shelter");
         for(int i=0;i<shelters.size();i++)
         {
             if (shelters.get(i).getId()==id) {
@@ -440,12 +441,23 @@ public class Application {
                     A.showTheSpeciesPreference();;
                     break;
                 case 3:
+                    Analytics.DisplayTheTopAdopters();
+                    break;
+                case 4:
+                    Analytics.calculateAdoptionTrends("monthly");
+                    Analytics.calculateAdoptionTrends("yearly");
+                    break;
+                case 5:
+                    Analytics.showAdoptionRequestStatistics();
+                    break;
+                case 6:
                     return;
 
                 default : Screen.displayMessage("Invalid choice.");
 
             }
         }
+
     }
 
     public static void ShelterMenu(){
@@ -460,7 +472,7 @@ public class Application {
                     ShelterManagement.AddNewShelter();
                     break;
                 case 2:
-                   ShelterManagement.DeleteShelter();
+                    ShelterManagement.DeleteShelter();
                     break;
                 case 3:
                     ShelterManagement.UpdateShelter();
